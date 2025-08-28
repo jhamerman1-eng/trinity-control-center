@@ -52,16 +52,60 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+				// Trading specific colors
+				profit: {
+					DEFAULT: 'hsl(var(--profit))',
+					foreground: 'hsl(var(--profit-foreground))'
+				},
+				loss: {
+					DEFAULT: 'hsl(var(--loss))',
+					foreground: 'hsl(var(--loss-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				neutral: {
+					DEFAULT: 'hsl(var(--neutral))',
+					foreground: 'hsl(var(--neutral-foreground))'
+				},
+				status: {
+					healthy: 'hsl(var(--status-healthy))',
+					degraded: 'hsl(var(--status-degraded))',
+					critical: 'hsl(var(--status-critical))',
+					inactive: 'hsl(var(--status-inactive))'
+				},
+				panel: {
+					header: 'hsl(var(--panel-header))',
+					border: 'hsl(var(--panel-border))'
+				},
+				metric: {
+					positive: 'hsl(var(--metric-positive))',
+					negative: 'hsl(var(--metric-negative))',
+					neutral: 'hsl(var(--metric-neutral))'
+				},
+				chart: {
+					grid: 'hsl(var(--chart-grid))',
+					profit: 'hsl(var(--chart-line-profit))',
+					loss: 'hsl(var(--chart-line-loss))',
+					neutral: 'hsl(var(--chart-line-neutral))'
 				}
+			},
+			fontFamily: {
+				mono: ['var(--font-mono)', 'monospace']
+			},
+			backgroundImage: {
+				'gradient-profit': 'var(--gradient-profit)',
+				'gradient-loss': 'var(--gradient-loss)',
+				'gradient-neutral': 'var(--gradient-neutral)'
+			},
+			boxShadow: {
+				'trading': 'var(--shadow-trading)',
+				'panel': 'var(--shadow-panel)'
+			},
+			transitionProperty: {
+				'fast': 'var(--transition-fast)',
+				'smooth': 'var(--transition-smooth)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
