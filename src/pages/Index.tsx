@@ -3,12 +3,20 @@ import { TradingPanel } from "@/components/TradingPanel";
 import { BotStatusPanel } from "@/components/BotStatusPanel";
 import { TradeStream } from "@/components/TradeStream";
 import { StatusIndicator } from "@/components/StatusIndicator";
+import { TimeFrameControl } from "@/components/TimeFrameControl";
+import { DatePickerControl } from "@/components/DatePickerControl";
+import { RegimeTable } from "@/components/RegimeTable";
+import { StrategyTable } from "@/components/StrategyTable";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings, Power, AlertTriangle } from "lucide-react";
+import { useState } from "react";
 
 const Index = () => {
+  const [timeFrame, setTimeFrame] = useState("24h");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -23,6 +31,10 @@ const Index = () => {
             </div>
             
             <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
+                <TimeFrameControl value={timeFrame} onValueChange={setTimeFrame} />
+                <DatePickerControl date={selectedDate} onDateChange={setSelectedDate} />
+              </div>
               <StatusIndicator status="healthy" label="System" />
               <Button variant="outline" size="sm">
                 <Settings className="h-4 w-4 mr-2" />
@@ -81,6 +93,43 @@ const Index = () => {
             
             <TabsContent value="pnl-drilldown" className="mt-6">
               <div className="space-y-6">
+                {/* Key Performance Score Cards */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Key Performance Metrics</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <MetricCard
+                      title="Alpha Generation"
+                      value="2.18"
+                      change="+0.15"
+                      changeType="positive"
+                      subtitle="Information Ratio vs Market"
+                      className="border-0 bg-gradient-profit shadow-none"
+                    />
+                    <MetricCard
+                      title="Risk-Adj Return"
+                      value="147.3%"
+                      change="+12.4%"
+                      changeType="positive"
+                      subtitle="Annualized Sharpe 2.34"
+                      className="border-0 bg-gradient-profit shadow-none"
+                    />
+                    <MetricCard
+                      title="Strategy Efficiency"
+                      value="89.2%"
+                      change="+2.1%"
+                      changeType="positive"
+                      subtitle="Signal to Noise Ratio"
+                      className="border-0 bg-gradient-profit shadow-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Analysis Tables */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <RegimeTable />
+                  <StrategyTable />
+                </div>
+
                 {/* Time Period PnL */}
                 <div>
                   <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Performance by Time Period</h3>
