@@ -5,6 +5,7 @@ import { TradeStream } from "@/components/TradeStream";
 import { StatusIndicator } from "@/components/StatusIndicator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings, Power, AlertTriangle } from "lucide-react";
 
 const Index = () => {
@@ -37,39 +38,188 @@ const Index = () => {
       </header>
 
       <main className="p-6 space-y-6">
-        {/* Global Portfolio Overview */}
+        {/* Portfolio Tabs */}
         <section>
-          <h2 className="text-lg font-semibold mb-4 text-foreground">Portfolio Overview</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <MetricCard
-              title="Total Equity"
-              value="$847,293.45"
-              change="+2.34%"
-              changeType="positive"
-              subtitle="Peak: $852,100 • DD: -1.2%"
-            />
-            <MetricCard
-              title="Daily PnL"
-              value="+$12,847.20"
-              change="+1.54%"
-              changeType="positive"
-              subtitle="Realized: $8,200 • Unrealized: $4,647"
-            />
-            <MetricCard
-              title="Leverage"
-              value="2.4x"
-              change="Normal"
-              changeType="neutral"
-              subtitle="Margin Used: 68% • Available: $124k"
-            />
-            <MetricCard
-              title="Sharpe Ratio"
-              value="2.18"
-              change="+0.05"
-              changeType="positive"
-              subtitle="30D Rolling • Risk-adj returns"
-            />
-          </div>
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 max-w-md">
+              <TabsTrigger value="overview">Portfolio Overview</TabsTrigger>
+              <TabsTrigger value="pnl-drilldown">PnL Drilldown</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="overview" className="mt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <MetricCard
+                  title="Total Equity"
+                  value="$847,293.45"
+                  change="+2.34%"
+                  changeType="positive"
+                  subtitle="Peak: $852,100 • DD: -1.2%"
+                />
+                <MetricCard
+                  title="Daily PnL"
+                  value="+$12,847.20"
+                  change="+1.54%"
+                  changeType="positive"
+                  subtitle="Realized: $8,200 • Unrealized: $4,647"
+                />
+                <MetricCard
+                  title="Leverage"
+                  value="2.4x"
+                  change="Normal"
+                  changeType="neutral"
+                  subtitle="Margin Used: 68% • Available: $124k"
+                />
+                <MetricCard
+                  title="Sharpe Ratio"
+                  value="2.18"
+                  change="+0.05"
+                  changeType="positive"
+                  subtitle="30D Rolling • Risk-adj returns"
+                />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="pnl-drilldown" className="mt-6">
+              <div className="space-y-6">
+                {/* Time Period PnL */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Performance by Time Period</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <MetricCard
+                      title="1H PnL"
+                      value="+$542.30"
+                      change="+0.06%"
+                      changeType="positive"
+                      subtitle="Last 60 minutes"
+                      className="border-0 bg-secondary/30 shadow-none"
+                    />
+                    <MetricCard
+                      title="4H PnL"
+                      value="+$2,847.50"
+                      change="+0.34%"
+                      changeType="positive"
+                      subtitle="Last 4 hours"
+                      className="border-0 bg-secondary/30 shadow-none"
+                    />
+                    <MetricCard
+                      title="24H PnL"
+                      value="+$12,847.20"
+                      change="+1.54%"
+                      changeType="positive"
+                      subtitle="Daily total"
+                      className="border-0 bg-secondary/30 shadow-none"
+                    />
+                    <MetricCard
+                      title="7D PnL"
+                      value="+$67,234.80"
+                      change="+8.63%"
+                      changeType="positive"
+                      subtitle="Weekly total"
+                      className="border-0 bg-secondary/30 shadow-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Bot Attribution */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3 text-muted-foreground">Bot Performance Attribution</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <TradingPanel title="JIT Market Maker">
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm">Spread Capture</span>
+                          <span className="text-sm font-mono text-metric-positive">+$9,247</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm">OBI Edge</span>
+                          <span className="text-sm font-mono text-metric-positive">+$3,124</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm">Adverse Selection</span>
+                          <span className="text-sm font-mono text-metric-negative">-$1,876</span>
+                        </div>
+                        <div className="pt-2 border-t border-panel-border">
+                          <div className="flex justify-between font-semibold">
+                            <span className="text-sm">Net PnL</span>
+                            <span className="text-sm font-mono text-metric-positive">+$10,495</span>
+                          </div>
+                        </div>
+                      </div>
+                    </TradingPanel>
+
+                    <TradingPanel title="Hedge Engine">
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm">Delta Hedging</span>
+                          <span className="text-sm font-mono text-metric-negative">-$2,124</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm">Slippage Cost</span>
+                          <span className="text-sm font-mono text-metric-negative">-$847</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm">Funding Revenue</span>
+                          <span className="text-sm font-mono text-metric-positive">+$1,847</span>
+                        </div>
+                        <div className="pt-2 border-t border-panel-border">
+                          <div className="flex justify-between font-semibold">
+                            <span className="text-sm">Net PnL</span>
+                            <span className="text-sm font-mono text-metric-negative">-$1,124</span>
+                          </div>
+                        </div>
+                      </div>
+                    </TradingPanel>
+
+                    <TradingPanel title="Trend Alpha">
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm">MACD Signals</span>
+                          <span className="text-sm font-mono text-metric-positive">+$4,247</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm">Momentum</span>
+                          <span className="text-sm font-mono text-metric-positive">+$2,124</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm">Stop Losses</span>
+                          <span className="text-sm font-mono text-metric-negative">-$647</span>
+                        </div>
+                        <div className="pt-2 border-t border-panel-border">
+                          <div className="flex justify-between font-semibold">
+                            <span className="text-sm">Net PnL</span>
+                            <span className="text-sm font-mono text-metric-positive">+$5,724</span>
+                          </div>
+                        </div>
+                      </div>
+                    </TradingPanel>
+                  </div>
+                </div>
+
+                {/* Asset Breakdown */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3 text-muted-foreground">PnL by Asset</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <MetricCard
+                      title="SOL-PERP PnL"
+                      value="+$8,247.30"
+                      change="+64.2%"
+                      changeType="positive"
+                      subtitle="Volume: $2.4M • Trades: 1,247"
+                      className="border-0 bg-gradient-profit shadow-none"
+                    />
+                    <MetricCard
+                      title="ETH-PERP PnL"
+                      value="+$4,599.90"
+                      change="+35.8%"
+                      changeType="positive"
+                      subtitle="Volume: $1.8M • Trades: 892"
+                      className="border-0 bg-gradient-profit shadow-none"
+                    />
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         </section>
 
         {/* Bot Status Grid */}
