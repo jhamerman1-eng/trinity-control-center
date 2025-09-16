@@ -2,6 +2,7 @@ import { TradingPanel } from "./TradingPanel";
 import { StatusIndicator } from "./StatusIndicator";
 import { MetricCard } from "./MetricCard";
 import { Badge } from "@/components/ui/badge";
+import { ReactNode } from "react";
 
 interface BotMetric {
   label: string;
@@ -15,13 +16,14 @@ interface BotStatusPanelProps {
   status: "healthy" | "degraded" | "critical" | "inactive";
   metrics: BotMetric[];
   badges?: string[];
+  headerAction?: ReactNode;
 }
 
-export function BotStatusPanel({ botName, status, metrics, badges = [] }: BotStatusPanelProps) {
+export function BotStatusPanel({ botName, status, metrics, badges = [], headerAction }: BotStatusPanelProps) {
   return (
     <TradingPanel 
       title={botName} 
-      headerAction={<StatusIndicator status={status} label={botName} />}
+      headerAction={headerAction || <StatusIndicator status={status} label={botName} />}
     >
       <div className="space-y-4">
         {badges.length > 0 && (

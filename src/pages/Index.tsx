@@ -9,6 +9,7 @@ import { RegimeTable } from "@/components/RegimeTable";
 import { StrategyTable } from "@/components/StrategyTable";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings, Power, AlertTriangle } from "lucide-react";
 import { useState } from "react";
@@ -16,6 +17,12 @@ import { useState } from "react";
 const Index = () => {
   const [timeFrame, setTimeFrame] = useState("24h");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  
+  // Bot toggle states
+  const [marketMakerEnabled, setMarketMakerEnabled] = useState(true);
+  const [hedgeEnabled, setHedgeEnabled] = useState(true);
+  const [trendEnabled, setTrendEnabled] = useState(true);
+  const [jitEnabled, setJitEnabled] = useState(true);
 
   return (
     <div className="min-h-screen bg-background">
@@ -277,8 +284,28 @@ const Index = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <BotStatusPanel
               botName="JIT Market Maker"
-              status="healthy"
+              status={marketMakerEnabled ? "healthy" : "inactive"}
               badges={["OBI Active", "Quote v2", "Cancel/Replace"]}
+              headerAction={
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-muted-foreground">JIT</span>
+                    <Switch 
+                      checked={jitEnabled} 
+                      onCheckedChange={setJitEnabled}
+                      disabled={!marketMakerEnabled}
+                    />
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-muted-foreground">Bot</span>
+                    <Switch 
+                      checked={marketMakerEnabled} 
+                      onCheckedChange={setMarketMakerEnabled}
+                    />
+                  </div>
+                  <StatusIndicator status={marketMakerEnabled ? "healthy" : "inactive"} label="JIT Market Maker" />
+                </div>
+              }
               metrics={[
                 {
                   label: "Spread (bps)",
@@ -309,8 +336,20 @@ const Index = () => {
 
             <BotStatusPanel
               botName="Hedge Engine"
-              status="healthy"
+              status={hedgeEnabled ? "healthy" : "inactive"}
               badges={["Delta Neutral", "CEX Route", "Swift v2"]}
+              headerAction={
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-muted-foreground">Bot</span>
+                    <Switch 
+                      checked={hedgeEnabled} 
+                      onCheckedChange={setHedgeEnabled}
+                    />
+                  </div>
+                  <StatusIndicator status={hedgeEnabled ? "healthy" : "inactive"} label="Hedge Engine" />
+                </div>
+              }
               metrics={[
                 {
                   label: "Net Delta",
@@ -341,8 +380,20 @@ const Index = () => {
 
             <BotStatusPanel
               botName="Trend Alpha"
-              status="degraded"
+              status={trendEnabled ? "degraded" : "inactive"}
               badges={["MACD Signal", "RBC Filter", "Anti-Chop"]}
+              headerAction={
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs text-muted-foreground">Bot</span>
+                    <Switch 
+                      checked={trendEnabled} 
+                      onCheckedChange={setTrendEnabled}
+                    />
+                  </div>
+                  <StatusIndicator status={trendEnabled ? "degraded" : "inactive"} label="Trend Alpha" />
+                </div>
+              }
               metrics={[
                 {
                   label: "Signal Strength",
