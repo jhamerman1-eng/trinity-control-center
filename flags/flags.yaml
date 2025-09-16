@@ -1,0 +1,38 @@
+feature:
+  jit:
+    enabled: true
+    obi: true
+    cancel_replace_v2: true
+    spread_bps: 6
+    inventory_skew: 0.25
+  swift:
+    enabled: true
+    forward_base: "http://localhost:8080"
+    fallback_on_error: true
+mm:
+  enabled: true
+  quote_size_usd: 250
+  max_position_usd: 15000
+trend:
+  enabled: true
+  base_notional_usd: 800
+  stop_loss_pct: 0.01
+  take_profit_pct: 0.02
+hedge:
+  enabled: true
+  mode: cross_account
+  buffer_usd: 200
+  urgency_threshold_usd: 1200
+risk:
+  crash_sentinel:
+    enabled: true
+    sigma_threshold: 3.0
+  rails:
+    soft_dd_pct: -7.5
+    hard_dd_pct: -20.0
+kills:
+  jit: false
+  swift: false
+  trend: false
+  mm: false
+  all: false
