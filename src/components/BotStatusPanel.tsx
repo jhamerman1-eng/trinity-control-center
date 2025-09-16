@@ -17,13 +17,17 @@ interface BotStatusPanelProps {
   metrics: BotMetric[];
   badges?: string[];
   headerAction?: ReactNode;
+  onTitleClick?: () => void;
+  isActive?: boolean;
 }
 
-export function BotStatusPanel({ botName, status, metrics, badges = [], headerAction }: BotStatusPanelProps) {
+export function BotStatusPanel({ botName, status, metrics, badges = [], headerAction, onTitleClick, isActive = true }: BotStatusPanelProps) {
   return (
     <TradingPanel 
       title={botName} 
       headerAction={headerAction || <StatusIndicator status={status} label={botName} />}
+      onTitleClick={onTitleClick}
+      isActive={isActive}
     >
       <div className="space-y-4">
         {badges.length > 0 && (

@@ -286,6 +286,8 @@ const Index = () => {
               botName="JIT Market Maker"
               status={marketMakerEnabled ? "healthy" : "inactive"}
               badges={["OBI Active", "Quote v2", "Cancel/Replace"]}
+              onTitleClick={() => setMarketMakerEnabled(!marketMakerEnabled)}
+              isActive={marketMakerEnabled}
               headerAction={
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center space-x-2">
@@ -294,13 +296,6 @@ const Index = () => {
                       checked={jitEnabled} 
                       onCheckedChange={setJitEnabled}
                       disabled={!marketMakerEnabled}
-                    />
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs text-muted-foreground">Bot</span>
-                    <Switch 
-                      checked={marketMakerEnabled} 
-                      onCheckedChange={setMarketMakerEnabled}
                     />
                   </div>
                   <StatusIndicator status={marketMakerEnabled ? "healthy" : "inactive"} label="JIT Market Maker" />
@@ -338,18 +333,8 @@ const Index = () => {
               botName="Hedge Engine"
               status={hedgeEnabled ? "healthy" : "inactive"}
               badges={["Delta Neutral", "CEX Route", "Swift v2"]}
-              headerAction={
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs text-muted-foreground">Bot</span>
-                    <Switch 
-                      checked={hedgeEnabled} 
-                      onCheckedChange={setHedgeEnabled}
-                    />
-                  </div>
-                  <StatusIndicator status={hedgeEnabled ? "healthy" : "inactive"} label="Hedge Engine" />
-                </div>
-              }
+              onTitleClick={() => setHedgeEnabled(!hedgeEnabled)}
+              isActive={hedgeEnabled}
               metrics={[
                 {
                   label: "Net Delta",
@@ -382,18 +367,8 @@ const Index = () => {
               botName="Trend Alpha"
               status={trendEnabled ? "degraded" : "inactive"}
               badges={["MACD Signal", "RBC Filter", "Anti-Chop"]}
-              headerAction={
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs text-muted-foreground">Bot</span>
-                    <Switch 
-                      checked={trendEnabled} 
-                      onCheckedChange={setTrendEnabled}
-                    />
-                  </div>
-                  <StatusIndicator status={trendEnabled ? "degraded" : "inactive"} label="Trend Alpha" />
-                </div>
-              }
+              onTitleClick={() => setTrendEnabled(!trendEnabled)}
+              isActive={trendEnabled}
               metrics={[
                 {
                   label: "Signal Strength",
